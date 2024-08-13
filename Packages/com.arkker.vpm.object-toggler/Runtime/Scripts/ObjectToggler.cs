@@ -20,7 +20,15 @@ public class ObjectToggler : UdonSharpBehaviour
 
     void Start()
     {
-
+        // Debug.Log(Networking.InstanceOwner.displayName);
+        if (Networking.InstanceOwner != null && Networking.InstanceOwner.displayName == Networking.LocalPlayer.displayName)
+        {
+            gameObject.SetActive(true);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     public override void OnDeserialization()
