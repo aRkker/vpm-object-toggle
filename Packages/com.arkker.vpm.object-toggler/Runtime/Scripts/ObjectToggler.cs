@@ -23,11 +23,17 @@ public class ObjectToggler : UdonSharpBehaviour
         // Debug.Log(Networking.InstanceOwner.displayName);
         if (Networking.InstanceOwner != null && Networking.InstanceOwner.displayName == Networking.LocalPlayer.displayName)
         {
-            gameObject.SetActive(true);
+            for (var i = 0; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).gameObject.SetActive(true);
+            }
         }
         else
         {
-            gameObject.SetActive(false);
+            for (var i = 0; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).gameObject.SetActive(false);
+            }
         }
     }
 
