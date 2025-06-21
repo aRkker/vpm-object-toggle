@@ -9,6 +9,10 @@ using VRC.Udon;
 [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
 public class ObjectToggler : UdonSharpBehaviour
 {
+    [Header("Object default state")]
+    [Tooltip("If true, the objects will be active by default. If false, they will be inactive.")]
+    public bool defaultState = true;
+
     [Header("List of objects to toggle")]
     public GameObject[] objects;
 
@@ -34,6 +38,20 @@ public class ObjectToggler : UdonSharpBehaviour
             {
                 transform.GetChild(i).gameObject.SetActive(false);
             }
+        }
+
+        _isOn = defaultState;
+        foreach (GameObject obj in objects)
+        {
+            obj.SetActive(_isOn);
+        }
+        if (checkbox != null)
+        {
+            checkbox.isOn = _isOn;
+        }
+        if (Networking.IsOwner(Networking.LocalPlayer, gameObject))
+        {
+            RequestSerialization();
         }
     }
 
