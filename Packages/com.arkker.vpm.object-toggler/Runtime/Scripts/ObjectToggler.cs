@@ -31,6 +31,9 @@ public class ObjectToggler : UdonSharpBehaviour
             {
                 transform.GetChild(i).gameObject.SetActive(true);
             }
+
+            // Only set defaultState for instance owner - late joiners get synced value
+            _isOn = defaultState;
         }
         else
         {
@@ -38,9 +41,11 @@ public class ObjectToggler : UdonSharpBehaviour
             {
                 transform.GetChild(i).gameObject.SetActive(false);
             }
+
+            // Late joiners: _isOn already has the synced value from the network
+            // Don't overwrite it with defaultState
         }
 
-        _isOn = defaultState;
         foreach (GameObject obj in objects)
         {
             obj.SetActive(_isOn);
